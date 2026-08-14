@@ -106,3 +106,19 @@ Each phase builds upon the previous, ensuring the MVP delivers core functionalit
 - Modified `users/views.py` register endpoint to return the plain 6-digit code (`user._plain_login_code`) for first-time user display while maintaining hash-based verification for subsequent OTP verification
 - Enhanced security: login codes are stored as bcrypt hashes (60-character) in database, providing password-grade security while allowing one-time display to users during registration
 - All API endpoints maintain backward compatible response formats
+
+## 12. Phase 4: Checkout System Prompt
+**User**: "Implement checkout system with authenticated and guest checkout support"
+**Response**: 
+- Created `checkout` app with models.py (Checkout model with user, email, phone, shipping_address fields)
+- Implemented checkout serializers.py with CheckoutSerializer supporting create() with optional user parameter
+- Created checkout views.py with create() endpoint supporting both authenticated (JWT/Bearer token) and guest checkouts
+- Set up checkout urls.py with POST /api/checkout/create endpoint
+- Added 'checkout' to config/settings.py INSTALLED_APPS
+- Integrated api/checkout/ into config/urls.py routing
+- Generated and applied migrations for checkout model
+- backend MVP now supports both authenticated checkout (user_id = authenticated user ID) and guest checkout (user_id = NULL)
+- Guest checkout supported for: (1) registered users skipping OTP, (2) unregistered emails
+- Success response: {success: true, message: "Checkout information saved successfully", checkout_id, user_id}
+- Failed validation returns 400 with error details
+- Backward compatible with existing Phase 2-3 authentication flow
