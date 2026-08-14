@@ -1,0 +1,145 @@
+# Byte-compiled / optimized / DLL files
+# --------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+# ------------------
+built-extension/
+native.zlib
+
+# Django migrations folder (if using squashmigrations)
+# --------------------
+# migrations/
+
+# Environment variables - DO NOT COMMIT
+# -------------------------------------
+.env
+
+# Database
+# --------
+# SQLite database file (if using local SQLite)
+# db.sqlite3
+
+# PostgreSQL (uncomment if needed)
+# *.db
+
+# Virtual Environment
+# -----------------
+venv/
+env/
+ENV/
+env.bak/
+
+# PyInstaller
+# ---------
+# Usually these are used to package the application as an executable
+# PyInstaller/*.manifest
+
+# Jupyter notebook
+# ----------------
+# .ipynb_checkpoints/
+
+# Google Colab
+# ------------
+# _.ipynb
+
+# Django specific
+# ---------------
+# .venv
+# env
+# envdir
+
+# Unit test / coverage reports
+# --------------------------
+htmlcov/
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+djangotest/
+pytest-override.ini
+
+# Sphinx documentation
+# ------------------
+docs/_build/
+build/
+egg/
+eggs/
+*.egg-info/
+.installed.cfg
+lib/
+lib64/
+parts/
+sdist/
+dist/
+
+# Sublime Text
+# ------------
+# Older versions may use these
+# .sublime-project
+# .sublime-workspace
+
+# IDE specific
+# ------------
+# Visual Studio Code
+# -----------------
+.vscode/
+# .code-workspace
+
+# JetBrains IDE
+# -------------
+# .idea/
+
+# OS specific
+# ------------
+# Windows
+# -------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+# -----
+.DS_Store
+
+# Linux
+# -----
+# # .beagleindexer
+# .config
+# .local
+
+# Media files
+# ---------
+# media/
+
+# Python distributions
+# ------------------
+# pip freeze output
+# requirements.txt
+
+# Pyc files
+# ---------
+*.pyc
+__pycache__/
+
+# Jupyter checkpoints
+# -----------------
+.ipynb_checkpoints/
+
+# pygments cache
+# -------------
+# .pygments-cache
+
+# mypy cache
+# ---------
+# .mypy_cache/
+
+# django-storages
+# --------------
+# media/
+
+# .env.example is safe to commit (contains placeholders)
+# .env is local development only
