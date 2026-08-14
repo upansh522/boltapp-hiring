@@ -57,4 +57,52 @@ Each phase builds upon the previous, ensuring the MVP delivers core functionalit
 - Generated migrations for both apps
 - Project structure ready for API implementation
 
-**Current Status**: Django project restored to original state, ready for PRD-based implementation.
+## 7. Phase 1: Project Setup & Foundation
+**User**: "Setup Django From Scratch and create project skeleton"
+**Response**: Complete Django setup including virtual environment, project creation, app setup, configuration, migrations, and server startup.
+
+## 8. Phase 2: User Model & Registration API
+**User**: "Create complete skeleton of my project then after we will go with coding part"
+**Response**: 
+- Created `users` app with custom User model (email as USERNAME_FIELD)
+- Implemented registration serializer with bcrypt-hashed 6-digit login code generation
+- Optimized user query - single database lookup using .first() instead of exists()+get()
+- Return actual code to display to user during registration (first-time display)
+- Implemented recognize serializer (check if email is registered)
+- Implemented verify serializer (OTP code verification with bcrypt hash comparison)
+- Created API views: register, recognize, verify
+- Set up URL endpoints for all authentication routes
+- Updated config/settings.py to include users app
+- Generated and applied migrations successfully (login_code field max_length updated to 120)
+
+## 9. Phase 3: Authentication & OTP Verification
+**User**: "Implement OTP-based authentication flow"
+**Response**: 
+- User registration generates and stores 6-digit login code
+- User recognition endpoint checks email existence
+- User verification endpoint validates 6-digit OTP code
+- All endpoints return structured JSON responses with success status
+- Code validates digit length and format (exactly 6 digits)
+- Invalid codes or non-existent users return appropriate error messages
+
+## 10. Current Development Prompt
+**User**: "create complete skeleton of my project then after we will go with coding part"
+**Response**: 
+- Created `users` app with models.py (custom User model), serializers.py (register, recognize, verify), views.py (API endpoints), urls.py
+- Created `checkout` app with models.py (Checkout model), serializers.py, views.py, urls.py (planned)
+- Updated config/settings.py to include users and checkout apps
+- Generated migrations for both apps
+- Project structure ready for API implementation
+
+**Current Status**: Phase 3 (Authentication & OTP Verification) complete with bcrypt-hashed login codes. Django project with secure user authentication flow implemented. Ready for Phase 4: Checkout System implementation.
+
+## 11. Current Changes Prompt
+**User**: "add bcrypt hashing for login codes, optimize user recognition with single query, and return actual code during registration"
+**Response**: 
+- Updated `users/models.py` login_code field max_length from 6 to 120 to accommodate bcrypt hashes
+- Updated `users/serializers.py` to hash 6-digit login codes using `bcrypt.hashpw()` during registration
+- Optimized `UserRecognizeSerializer.validate()` to use single database query `User.objects.filter(email__iexact=email).first()` instead of separate `exists()` + `get()` calls
+- Updated `UserVerifySerializer.validate()` to compare provided code against hashed code using `bcrypt.checkpw()`
+- Modified `users/views.py` register endpoint to return the plain 6-digit code (`user._plain_login_code`) for first-time user display while maintaining hash-based verification for subsequent OTP verification
+- Enhanced security: login codes are stored as bcrypt hashes (60-character) in database, providing password-grade security while allowing one-time display to users during registration
+- All API endpoints maintain backward compatible response formats
