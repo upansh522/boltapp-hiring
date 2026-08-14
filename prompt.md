@@ -112,7 +112,7 @@ Each phase builds upon the previous, ensuring the MVP delivers core functionalit
 **Response**: 
 - Created `checkout` app with models.py (Checkout model with user, email, phone, shipping_address fields)
 - Implemented checkout serializers.py with CheckoutSerializer supporting create() with optional user parameter
-- Created checkout views.py with create() endpoint supporting both authenticated (JWT/Bearer token) and guest checkouts
+- Created checkout views.py with create() endpoint supporting both authenticated (session-based) and guest checkouts
 - Set up checkout urls.py with POST /api/checkout/create endpoint
 - Added 'checkout' to config/settings.py INSTALLED_APPS
 - Integrated api/checkout/ into config/urls.py routing
@@ -122,3 +122,14 @@ Each phase builds upon the previous, ensuring the MVP delivers core functionalit
 - Success response: {success: true, message: "Checkout information saved successfully", checkout_id, user_id}
 - Failed validation returns 400 with error details
 - Backward compatible with existing Phase 2-3 authentication flow
+
+## 11. Current Changes Prompt
+**User**: "add bcrypt hashing for login codes, optimize user recognition with single query, and return actual code during registration"
+**Response**: 
+- Updated `users/models.py` login_code field max_length from 6 to 120 to accommodate bcrypt hashes
+- Updated `users/serializers.py` to hash 6-digit login codes using `bcrypt.hashpw()` during registration
+- Optimized `UserRecognizeSerializer.validate()` to use single database query `User.objects.filter(email__iexact=email).first()` instead of separate `exists()` + `get()` calls
+- Updated `UserVerifySerializer.validate()` to compare provided code against hashed code using `bcrypt.checkpw()`
+- Modified `users/views.py` register endpoint to return the plain 6-digit code (`user._plain_login_code`) for first-time user display while maintaining hash-based verification for subsequent OTP verification
+- Enhanced security: login codes are stored as bcrypt hashes (60-character) in database, providing password-grade security while allowing one-time display to users during registration
+- All API endpoints maintain backward compatible response formats

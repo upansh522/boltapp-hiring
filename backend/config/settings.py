@@ -22,7 +22,7 @@ AUTH_USER_MODEL = 'users.User'
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key-for-dev')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
@@ -76,16 +76,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-# PRD #23: Database configuration split into individual environment variables
-# Allows split configuration without requiring DATABASE_URL
-
-# Individual DB environment variables with local fallbacks
-DB_NAME = os.getenv('DB_NAME', 'neondb')
-DB_USER = os.getenv('DB_USER', 'neondb_owner')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'npg_0Ev1CchJSIjP')
-DB_HOST = os.getenv('DB_HOST', 'ep-sweet-credit-a1aepsb3-pooler.ap-southeast-1.aws.neon.tech')
+# Local development database credentials
+# Update these values to match your local PostgreSQL setup
+DB_NAME = os.getenv('DB_NAME', 'postgres')
+DB_USER = os.getenv('DB_USER', 'postgres')
+DB_PASSWORD = os.getenv('DB_PASSWORD', '')
+DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 DB_PORT = os.getenv('DB_PORT', '5432')
-DB_SSLMODE = os.getenv('DB_SSLMODE', 'require')
+DB_SSLMODE = os.getenv('DB_SSLMODE', 'disable')
 
 # Construct DATABASES dict from individual variables
 # This allows separate configuration of each DB parameter
