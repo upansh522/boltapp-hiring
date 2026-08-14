@@ -14,6 +14,7 @@ class Checkout(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     shipping_address = models.TextField()
+    idempotency_key = models.UUIDField(unique=True, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
