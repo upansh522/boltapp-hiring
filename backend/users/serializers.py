@@ -18,8 +18,8 @@ class UserRegisterSerializer(serializers.Serializer):
         return value
 
     def create(self):
-        """Create and return a new user instance with hashed login code."""
-        # Use email as username since USERNAME_FIELD = 'email'
+        """Create and return a new user instance."""
+        # Use email as username since we're using email as USERNAME_FIELD
         username = self.validated_data['email'].split('@')[0]
         user = User.objects.create(
             username=username,
@@ -27,15 +27,13 @@ class UserRegisterSerializer(serializers.Serializer):
             first_name=self.validated_data['first_name'],
             last_name=self.validated_data['last_name'],
         )
-        # Generate 6-digit login code
+        # Generate 6-digit login code and hash it
         import random
         login_code_plain = str(random.randint(100000, 999999))
-        # Hash the code for secure storage
         hashed_code = bcrypt.hashpw(login_code_plain.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         user.login_code = hashed_code
         user.save()
-        # Return user with plain code as additional info
-        # We'll attach it as an instance attribute for the response
+        # Attach plain code as temporary attribute for response
         user._plain_login_code = login_code_plain
         return user
 

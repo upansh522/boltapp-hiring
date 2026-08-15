@@ -22,7 +22,7 @@ class CheckoutSerializer(serializers.Serializer):
         """Save and return a new checkout instance with idempotency."""
         validated_data = self.validated_data
         idempotency_key = validated_data.get('idempotency_key')
-        user = kwargs.get('user')
+        user = kwargs.get('user')  # This will be None for guest checkout
         
         # Check for existing checkout with same idempotency key (idempotent behavior)
         existing_checkout = None
@@ -36,20 +36,19 @@ class CheckoutSerializer(serializers.Serializer):
             # Return existing checkout - idempotent behavior
             return existing_checkout
         
-        # Use the provided idempotency key if available, otherwise generate a new one
-        if idempotency_key:
-            # Key was provided but doesn't exist in DB - use it anyway
-            new_key = idempotency_key
-        else:
-            # No key provided - generate a new one
-            import uuid
-            new_key = uuid.uuid4()
+        # Use the provided user (will be None for guest checkout) or None
+        user = user if user is not None else None
+        
+        # Generate a new idempotency key if not provided
+        import uuid
+        if not idempotency_key:
+            idempotency_key = uuid.uuid4()
         
         checkout = Checkout.objects.create(
             user=user,
             email=validated_data['email'],
             phone=validated_data['phone'],
             shipping_address=validated_data['shipping_address'],
-            idempotency_key=new_key,
+            idempotency_key=idempotency_key,
         )
         return checkout
