@@ -70,7 +70,7 @@ This file records the frontend development prompts and requirements used for the
 - Preserve all checkout fields during the OTP flow.
 - Display server/network errors and API loading states.
 - Disable actions while registration, verification, or checkout submission is in progress.
-- Include a client-generated idempotency UUID for checkout submissions to prevent accidental duplicates.
+- Submit checkout using only the backend's required `email`, `phone`, and `shipping_address` fields.
 
 **Implementation result:** Registration, recognition, OTP verification, guest behavior, and checkout submission are wired through the shared Axios services. The production build passes.
 
