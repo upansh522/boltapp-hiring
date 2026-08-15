@@ -1,8 +1,29 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.conf import settings
+from django.core import signing
 from .serializers import CheckoutSerializer
 from .models import Checkout
+from users.models import User
+
+
+def authenticated_user_from_request(request):
+    """Return the OTP-verified user encoded in a signed Bearer token, if present."""
+    authorization = request.headers.get('Authorization', '')
+    if not authorization.startswith('Bearer '):
+        return None
+
+    token = authorization.removeprefix('Bearer ').strip()
+    try:
+        payload = signing.loads(
+            token,
+            salt='checkout-authentication',
+            max_age=settings.CHECKOUT_AUTH_TOKEN_MAX_AGE,
+        )
+        return User.objects.filter(id=payload.get('user_id')).first()
+    except (signing.BadSignature, signing.SignatureExpired):
+        return None
 
 
 @api_view(['POST'])
@@ -10,9 +31,8 @@ def create(request):
     """Create checkout entry - authenticated or guest with idempotency support."""
     serializer = CheckoutSerializer(data=request.data)
     if serializer.is_valid():
-        # The serializer.save() handles idempotency logic
-        # user is passed as None from the view for guest checkout
-        checkout = serializer.save(user=None)
+        # A missing/invalid token intentionally keeps the checkout as a guest checkout.
+        checkout = serializer.save(user=authenticated_user_from_request(request))
         
         # Determine the key to return
         idempotency_key = checkout.idempotency_key

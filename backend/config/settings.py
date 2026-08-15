@@ -38,6 +38,7 @@ CORS_ALLOWED_ORIGINS = [
     ).split(',')
     if origin.strip()
 ]
+CHECKOUT_AUTH_TOKEN_MAX_AGE = int(os.getenv('CHECKOUT_AUTH_TOKEN_MAX_AGE', '900'))
 
 
 # Application definition

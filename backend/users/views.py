@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.core import signing
 from .serializers import UserRegisterSerializer, UserRecognizeSerializer, UserVerifySerializer
 from .models import User
 
@@ -63,6 +64,10 @@ def verify(request):
     serializer = UserVerifySerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.validated_data['user']
+        checkout_auth_token = signing.dumps(
+            {'user_id': user.id},
+            salt='checkout-authentication',
+        )
         return Response({
             'success': True,
             'user': {
@@ -71,6 +76,7 @@ def verify(request):
                 'firstName': user.first_name,
                 'lastName': user.last_name,
             },
+            'checkout_auth_token': checkout_auth_token,
         })
     return Response({
         'success': False,
