@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": [
-      "dom",
-      "es2020"
-    ],
+    "lib": ["dom", "es2020"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "allowJs": true,
@@ -18,21 +15,7 @@
     "outDir": ".next",
     "baseUrl": ".",
     "paths": {
-      "components/*": [
-        "components/*"
-      ],
-      "services/*": [
-        "services/*"
-      ],
-      "hooks/*": [
-        "hooks/*"
-      ],
-      "types/*": [
-        "types/*"
-      ],
-      "utils/*": [
-        "utils/*"
-      ]
+      "*": ["*"]
     },
     "noEmit": true,
     "incremental": true,
@@ -53,7 +36,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
-  "isolatedModules": true,
-  "jsx": "react-jsx"
+  ]
 }
