@@ -13,9 +13,8 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "outDir": ".next",
-    "baseUrl": ".",
     "paths": {
-      "*": ["*"]
+      "*": ["./*"]
     },
     "noEmit": true,
     "incremental": true,

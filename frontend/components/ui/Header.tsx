@@ -1,0 +1,2 @@
+import Link from "next/link";
+export function Header() { return <header className="topbar"><Link href="/" className="brand"><span className="brand-mark">◇</span> QuickCheckout</Link><nav aria-label="Main navigation"><a href="#features">Features</a><a href="#how-it-works">How It Works</a><a href="#security">Security</a><a href="#contact">Contact</a></nav><Link href="/register" className="header-cta">Get Started</Link></header>; }
