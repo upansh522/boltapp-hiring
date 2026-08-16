@@ -1,0 +1,15 @@
+# This is a Node.js/Next.js project, not a Python project.
+# Dependencies are managed via package.json and package-lock.json.
+# 
+# For the Django backend (separate ./backend directory), see requirements.txt there.
+# 
+# Frontend dependencies (npm packages):
+# - next (framework)
+# - react & react-dom (UI library)
+# - typescript (type safety)
+# - tailwindcss (styling)
+# - bootstrap (UI components)
+# - axios (API communication)
+# - react-router-dom (navigation)
+
+# If you need Python packages for the Django backend, please see backend/requirements.txt

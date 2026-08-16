@@ -1,1 +1,11 @@
-django-cors-headers>=4.7,<5
+# Core framework and API
+Django==6.1
+djangorestframework==3.18.0
+
+# Configuration and database
+python-dotenv==1.2.2
+dj-database-url==3.1.2
+
+# Authentication and browser integration
+bcrypt==5.0.0
+django-cors-headers==4.9.0
