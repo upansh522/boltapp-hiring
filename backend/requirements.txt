@@ -5,7 +5,7 @@ djangorestframework==3.18.0
 # Configuration and database
 python-dotenv==1.2.2
 dj-database-url==3.1.2
-psycopg2-binary==2.9.9
+psycopg==3.1.5
 
 # Authentication and browser integration
 bcrypt==5.0.0
