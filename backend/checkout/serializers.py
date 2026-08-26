@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Checkout
-
+import uuid
 
 class CheckoutSerializer(serializers.Serializer):
     """Serializer for checkout creation with idempotency support."""
@@ -40,7 +40,6 @@ class CheckoutSerializer(serializers.Serializer):
         user = user if user is not None else None
         
         # Generate a new idempotency key if not provided
-        import uuid
         if not idempotency_key:
             idempotency_key = uuid.uuid4()
         
